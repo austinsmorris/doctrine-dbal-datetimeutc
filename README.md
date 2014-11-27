@@ -14,7 +14,8 @@ Install via composer:
 Add the custom type before instantiating your entity manager:
 
 ```php
-\Doctrine\DBAL\Types\Type::addType('datetimeutc', 'ASM\Doctrine\DBAL\Types\DateTimeUTCType');
+use Doctrine\DBAL\Types\Type;
+Type::addType('datetimeutc', 'ASM\Doctrine\DBAL\Types\DateTimeUTCType');
 ```
 
 Enjoy!
