@@ -8,6 +8,7 @@
       "email": "austin.morris@gmail.com"
     }
   ],
+  "license": "MIT",
   "require": {
     "php": ">=5.3.2",
     "doctrine/dbal": "~2.4"
