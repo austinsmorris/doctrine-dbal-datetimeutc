@@ -5,7 +5,6 @@ php:
   - 5.6
   - 7.0
   - hhvm
-  - hhvm-nightly
 
 before_install:
   - composer self-update
@@ -18,5 +17,3 @@ script:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: hhvm-nightly
