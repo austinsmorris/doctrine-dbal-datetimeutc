@@ -62,4 +62,12 @@ class DateTimeUTCType extends DateTimeType
 
         return $dateTime;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }
