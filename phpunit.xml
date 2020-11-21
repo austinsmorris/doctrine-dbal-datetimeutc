@@ -7,8 +7,12 @@
     convertWarningsToExceptions="true"
     processIsolation="false"
     stopOnFailure="false"
-    syntaxCheck="false"
 >
+    <coverage>
+        <include>
+            <directory>src</directory>
+        </include>
+    </coverage>
     <testsuites>
         <testsuite name="ASM Doctrine DBAL Test Suite">
             <directory>./tests/</directory>

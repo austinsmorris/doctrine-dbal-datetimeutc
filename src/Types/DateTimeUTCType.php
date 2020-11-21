@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ASM\Doctrine\DBAL\Types;
 
 use DateTime;
@@ -8,18 +10,13 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
 
-/**
- * Class DateTimeUTCType
- * @package ASM\Doctrine\DBAL\Types
- */
+use function date_create;
+
 class DateTimeUTCType extends DateTimeType
 {
-    const DATETIMEUTC = 'datetimeutc';
+    public const DATETIMEUTC = 'datetimeutc';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return self::DATETIMEUTC;
     }
@@ -29,8 +26,9 @@ class DateTimeUTCType extends DateTimeType
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null) ?
-            $value->setTimezone(new DateTimeZone('UTC'))->format($platform->getDateTimeFormatString()) : null;
+        return $value === null
+            ? null
+            : $value->setTimezone(new DateTimeZone('UTC'))->format($platform->getDateTimeFormatString());
     }
 
     /**
@@ -39,7 +37,7 @@ class DateTimeUTCType extends DateTimeType
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         if ($value === null) {
-            return $value;
+            return null;
         }
 
         if ($value instanceof DateTime) {
@@ -48,11 +46,11 @@ class DateTimeUTCType extends DateTimeType
 
         $dateTime = DateTime::createFromFormat($platform->getDateTimeFormatString(), $value, new DateTimeZone('UTC'));
 
-        if (!$dateTime) {
+        if ($dateTime === false) {
             $dateTime = date_create($value, new DateTimeZone('UTC'));
         }
 
-        if (!$dateTime) {
+        if ($dateTime === false) {
             throw ConversionException::conversionFailedFormat(
                 $value,
                 $this->getName(),
@@ -63,10 +61,7 @@ class DateTimeUTCType extends DateTimeType
         return $dateTime;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
     }

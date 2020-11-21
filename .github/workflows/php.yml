@@ -1,0 +1,24 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: [ '7.3', '7.4', '8.0' ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: composer validate
+      - run: composer install --prefer-dist --no-progress --no-suggest
+      - run: composer check
